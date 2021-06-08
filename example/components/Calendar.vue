@@ -21,7 +21,7 @@
     :locale="locale"
     :first-day-of-week="firstDayOfWeek"
     prevent-out-of-range
-    mode="single"
+    mode="range"
   >
     <div class="root">
       <div
@@ -74,14 +74,19 @@
     data() {
       return {
         selection: null,
-        minDate: '2019-06-01',
-        maxDate: '2022-06-26',
+        minDate: new Date('2019-06-01'),
+        maxDate: new Date('2022-06-26'),
         disabledDates: ['2019-05-30', '2019-06-12', '2019-06-20']
       };
     },
     computed: {
       firstDayOfWeek() {
         return this.locale === 'en' ? 0 : 1;
+      }
+    },
+    watch: {
+      selection(newSelection) {
+        console.log('Update:', newSelection);
       }
     },
     methods: {

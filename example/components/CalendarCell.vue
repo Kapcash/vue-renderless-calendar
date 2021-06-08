@@ -1,13 +1,10 @@
 <template>
-  <!--v-if="!date.isOtherMonthDay"-->
   <button
     class="calendar-cell"
-    :data-date="date.day"
     :class="rootClasses"
   >
-    {{ date.day }}
+    {{ date.getDate() }}
   </button>
-  <!--<div class="calendar-cell" v-else></div>-->
 </template>
 
 <script>
@@ -17,10 +14,7 @@
     props: {
       date: {
         required: true,
-        type: Object
-      },
-      selectedDates: {
-        type: Array
+        type: Date
       },
       isSelected: {
         default: false,

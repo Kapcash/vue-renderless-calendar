@@ -33,7 +33,7 @@
     },
     data: () => ({
       hardcodedLocale: localeRu,
-      customLocale: 'hu'
+      customLocale: 'en'
     })
   };
 </script>
