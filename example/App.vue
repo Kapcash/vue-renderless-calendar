@@ -8,7 +8,7 @@
             <button
               v-for="loc in ['fr', 'de', 'es', 'en', 'pl']"
               :key="loc"
-              :class="{active: loc === customLocale}"
+              :class="{ active: loc === customLocale }"
               @click="customLocale = loc"
             >
               {{ loc }}
@@ -18,41 +18,24 @@
         </p>
         <Calendar :locale="customLocale" />
       </section>
-      <section>
-        <p>
-          Hard-coded locale <i>(backward-compatible)</i>
-          <pre>/lib/locale/ru.js</pre>
-        </p>
-        <Calendar :locale="hardcodedLocale" />
-      </section>
     </div>
-    <section>
-      <DoubleCalendar :locale="customLocale" />
-    </section>
-    <section>
-      <InfiniteCalendar locale="de-DE" />
-    </section>
   </div>
 </template>
 
 <script>
-import Calendar from './components/Calendar.vue';
-import DoubleCalendar from './components/DoubleCalendar.vue';
-import InfiniteCalendar from './components/InfiniteCalendar.vue';
-import localeRu from '../lib/locale/ru';
+  import Calendar from './components/Calendar.vue';
+  import localeRu from '../lib/locale/ru';
 
-export default {
-  name: 'App',
-  components: {
-    InfiniteCalendar,
-    DoubleCalendar,
-    Calendar
-  },
-  data: () => ({
-    hardcodedLocale: localeRu,
-    customLocale: 'hu'
-  })
-};
+  export default {
+    name: 'App',
+    components: {
+      Calendar
+    },
+    data: () => ({
+      hardcodedLocale: localeRu,
+      customLocale: 'hu'
+    })
+  };
 </script>
 
 <style lang="scss">

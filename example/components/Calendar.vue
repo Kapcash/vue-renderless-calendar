@@ -1,8 +1,8 @@
 <template>
   <RenderlessCalendar
+    v-model="selection"
     v-slot="{
       getModifiers,
-      selectedDates,
       prevPage,
       nextPage,
       weekDayNames,
@@ -21,16 +21,13 @@
     :locale="locale"
     :first-day-of-week="firstDayOfWeek"
     prevent-out-of-range
-    mode="range"
-    @onDateChange="handleDateChange"
+    mode="single"
   >
     <div class="root">
       <div
         v-for="view in calendar"
         :key="`${view.month}-${view.year}`"
         class="calendar"
-        :data-date-1="selectedDates[0] && selectedDates[0].formatted"
-        :data-date-2="selectedDates[1] && selectedDates[1].formatted"
       >
         <div class="calendar__header">
           <button class="calendar__month-btn" :disabled="!canGoToPrevMonth" @click="prevPage"></button>
@@ -69,10 +66,14 @@
       CalendarCell
     },
     props: {
-      locale: [String, Object]
+      locale: {
+        type: [String, Object],
+        default: 'fr'
+      }
     },
     data() {
       return {
+        selection: null,
         minDate: '2019-06-01',
         maxDate: '2022-06-26',
         disabledDates: ['2019-05-30', '2019-06-12', '2019-06-20']
