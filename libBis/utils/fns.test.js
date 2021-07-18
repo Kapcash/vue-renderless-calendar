@@ -71,7 +71,7 @@ describe('fns', () => {
     });
   });
   describe('expand full weeks', () => {
-    function expectFullWeeks(generatedMonth) {
+    function expectFullWeeks(generatedMonth, firstDayOfWeek = 0) {
       const currentMonth = generatedMonth.monthIndex;
       const { dates } = generatedMonth;
       
@@ -79,10 +79,10 @@ describe('fns', () => {
       const prevMonthYear = subMonths(firstDate, 1).getFullYear();
       const lastDate = dates[dates.length - 1];
       const nextMonthYear = addMonths(lastDate, 1).getFullYear();
-      const nbBefore = firstDate.getDay();
-      const nbAfter = 6 - lastDate.getDay();
+      const nbBefore = (6 + firstDate.getDay() - firstDayOfWeek) % 6;
+      const nbAfter = (6 + firstDayOfWeek - lastDate.getDay()) % 6;
 
-      expandFullWeek(generatedMonth);
+      expandFullWeek(generatedMonth, firstDayOfWeek);
 
       const beforeDates = dates.slice(0, nbBefore);
       const afterDates = nbAfter > 0 ? dates.slice(-nbAfter) : [];
@@ -112,14 +112,35 @@ describe('fns', () => {
       const startDate = new Date(2021, 4);
       let monthsDates = generateDates(startDate, 4);
 
-      monthsDates.forEach(expectFullWeeks);
+      monthsDates.forEach(mth => expectFullWeeks(mth));
     });
 
     it('should add other months days to complete weeks on several months across two years', () => {
       const startDate = new Date(2021, 11);
       let monthsDates = generateDates(startDate, 3);
 
-      monthsDates.forEach(expectFullWeeks);
+      monthsDates.forEach(mth => expectFullWeeks(mth));
+    });
+
+    it('should add other months days to complete weeks when first day is sunday', () => {
+      const startDate = new Date(2021, 11);
+      let monthsDates = generateDates(startDate, 3);
+
+      monthsDates.forEach(mth => expectFullWeeks(mth, 0));
+    });
+
+    it('should add other months days to complete weeks when first day is monday', () => {
+      const startDate = new Date(2021, 11);
+      let monthsDates = generateDates(startDate, 3);
+
+      monthsDates.forEach(mth => expectFullWeeks(mth, 1));
+    });
+
+    it('should add other months days to complete weeks when first day is wednesday', () => {
+      const startDate = new Date(2021, 11);
+      let monthsDates = generateDates(startDate, 3);
+
+      monthsDates.forEach(mth => expectFullWeeks(mth, 3));
     });
   });
 });

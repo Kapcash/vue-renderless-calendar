@@ -45,11 +45,11 @@ export function expandFullWeekAllMonths(monthsDates) {
   monthsDates.forEach(expandFullWeek);
 }
 
-export function expandFullWeek(monthDates) {
+export function expandFullWeek(monthDates, firstDayOfWeek) {
   const firstDate = monthDates.dates[0];
   const lastDate = monthDates.dates[monthDates.dates.length - 1];
-  const nbToPreppend = firstDate.getDay();
-  const nbToAppend = 6 - lastDate.getDay();
+  const nbToPreppend = (6 + firstDate.getDay() - firstDayOfWeek) % 6;
+  const nbToAppend = (6 + firstDayOfWeek - lastDate.getDay()) % 6;
 
   const prependedDates = generateDays(firstDate, -nbToPreppend).reverse();
   const appendedDates = generateDays(lastDate, nbToAppend);
