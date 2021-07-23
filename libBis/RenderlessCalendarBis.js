@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import { addMonths, subMonths } from 'date-fns';
 import CalendarDate from './classes/CalendarDate';
 import { generateFullWeekDates, getWeekdayNames } from './utils/fns';
 
@@ -67,6 +68,8 @@ export default {
   data() {
     return {
       months: null,
+      currentDate: null,
+      currentMonthIndex: 0,
       selectedDates: [],
       startMonth: null,
       startYear: null,
@@ -76,12 +79,15 @@ export default {
 
   created() {
     this.selectedDates = [this.value].flat().filter(Boolean);
-    const startDate = new CalendarDate(this.startDate || new Date());
+    this.currentDate = new CalendarDate(this.startDate || new Date());
 
-    this.months = generateFullWeekDates(startDate, this.numberOfMonths || 1);
+    this.months = generateFullWeekDates(this.currentDate, this.numberOfMonths || 1);
   },
 
   computed: {
+    displayedMonths() {
+      return this.months.slice(this.currentMonthIndex, this.currentMonthIndex + this.numberOfMonths);
+    },
     // /**
     //  * @return {LocaleStrings}
     //  */
@@ -149,6 +155,23 @@ export default {
       this.selectedDates = dates;
       this.$emit('input', dates.length === 1 ? dates[0] : dates);
       this.$emit('onDateChange', dates);
+    },
+    prevMonth() {
+      this.currentMonthIndex -= 1;
+      this.currentDate = new CalendarDate(subMonths(this.currentDate._date, 1));
+      
+      if (this.currentMonthIndex < 0) {
+        this.currentMonthIndex = 0;
+        this.months.unshift(generateFullWeekDates(this.currentDate, 1)[0]);
+      }
+    },
+    nextMonth() {
+      this.currentMonthIndex += 1;
+      this.currentDate = new CalendarDate(addMonths(this.currentDate._date, 1));
+      
+      if (this.currentMonthIndex >= this.months.length) {
+        this.months.push(generateFullWeekDates(this.currentDate, 1)[0]);
+      }
     }
     // resetDates(index) {
     //   this.setDates(resetDate(this.selectedDates, index));
@@ -366,12 +389,15 @@ export default {
       weekDayNames: this.weekDayNames,
       monthNames: this.monthNames,
       monthsList: this.monthsList,
-      datesByMonths: this.months,
+      datesByMonths: this.displayedMonths,
 
       calendar: this.calendar,
       selectedDates: this.selectedDates,
       startMonth: this.startMonth,
       startYear: this.startYear,
+
+      prevMonth: this.prevMonth,
+      nextMonth: this.nextMonth,
 
       canGoToPrevMonth: this.canGoToPrevMonth,
       canGoToNextMonth: this.canGoToNextMonth,

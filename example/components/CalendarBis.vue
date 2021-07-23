@@ -5,6 +5,8 @@
       datesByMonths,
       dateListeners,
       dateAttrs,
+      prevMonth,
+      nextMonth
     }"
     :min-date="minDate"
     :max-date="maxDate"
@@ -15,6 +17,10 @@
     range
   >
     <div class="root">
+      <div class="head">
+        <button @click="prevMonth">-</button>
+        <button @click="nextMonth">+</button>
+      </div>
       <div
         v-for="month in datesByMonths"
         :key="`${month.monthIndex}-${month.year}`"

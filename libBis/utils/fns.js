@@ -63,6 +63,9 @@ export function expandFullWeek(monthDates, firstDayOfWeek) {
   const prependedDates = generateDays(firstDate, -nbToPreppend).reverse();
   const appendedDates = generateDays(lastDate, nbToAppend);
 
+  prependedDates.forEach(date => date.isOtherMonth = true);
+  appendedDates.forEach(date => date.isOtherMonth = true);
+
   monthDates.dates.unshift(...prependedDates);
   monthDates.dates.push(...appendedDates);
 }

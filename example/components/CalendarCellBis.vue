@@ -68,7 +68,7 @@
       },
       rootClasses() {
         return {
-          '--is-other-month-day': this.date.isOtherMonthDay,
+          '--is-other-month-day': this.date.isOtherMonth,
           '--selected': this.date.isSelected,
           '--weekend': this.date.isWeekend,
           '--disabled': this.isDisabled,
