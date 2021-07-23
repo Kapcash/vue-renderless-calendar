@@ -16,20 +16,20 @@
             <input v-model="customLocale">
           </span>
         </p>
-        <Calendar :locale="customLocale" />
+        <CalendarBis :locale="customLocale" />
       </section>
     </div>
   </div>
 </template>
 
 <script>
-  import Calendar from './components/Calendar.vue';
+  import CalendarBis from './components/CalendarBis.vue';
   import localeRu from '../lib/locale/ru';
 
   export default {
     name: 'App',
     components: {
-      Calendar
+      CalendarBis
     },
     data: () => ({
       hardcodedLocale: localeRu,

@@ -2,13 +2,7 @@
   <RenderlessCalendarBis
     v-model="selection"
     v-slot="{
-      prevPage,
-      nextPage,
-      weekDayNames,
-      monthNames,
       datesByMonths,
-      canGoToPrevMonth,
-      canGoToNextMonth,
       dateListeners,
       dateAttrs,
     }"
@@ -26,24 +20,13 @@
         :key="`${month.monthIndex}-${month.year}`"
         class="calendar"
       >
-        <div class="calendar__header">
-          <button class="calendar__month-btn" :disabled="!canGoToPrevMonth" @click="prevPage"></button>
-          <span class="calendar__title" style="text-transform:capitalize">
-            {{ monthNames[view.month].full }}, <strong style="font-weight: 800;">{{ view.year }}</strong>
-          </span>
-          <button class="calendar__month-btn" :disabled="!canGoToNextMonth" @click="nextPage"></button>
-        </div>
-        <div class="calendar__weeks">
-          <span v-for="day in weekDayNames" :key="day.short" class="calendar__week-day">
-            {{ day.short }}
-          </span>
-        </div>
+        {{ month.monthIndex }} {{ month.year }}
         <div class="calendar__body">
-          <CalendarCell
+          <CalendarCellBis
             v-for="date in month.dates"
             :key="date.ms"
-            v-bind="dateAttrs"
             :date="date"
+            v-bind="dateAttrs"
             v-on="dateListeners"
           />
         </div>
@@ -53,12 +36,12 @@
 </template>
 
 <script>
-  import CalendarCell from './CalendarCell.vue';
+  import CalendarCellBis from './CalendarCellBis.vue';
 
   export default {
-    name: 'Calendar',
+    name: 'CalendarBis',
     components: {
-      CalendarCell
+      CalendarCellBis
     },
     props: {
       locale: {
@@ -77,6 +60,11 @@
     computed: {
       firstDayOfWeek() {
         return this.locale === 'en' ? 0 : 1;
+      }
+    },
+    methods: {
+      test() {
+        console.log('test');
       }
     }
   };

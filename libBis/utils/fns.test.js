@@ -143,4 +143,8 @@ describe('fns', () => {
       monthsDates.forEach(mth => expectFullWeeks(mth, 3));
     });
   });
+
+  describe('Generate weekday names', () => {
+    // TODO
+  });
 });
