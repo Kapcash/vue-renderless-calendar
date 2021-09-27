@@ -1,15 +1,18 @@
-# vue-renderless-calendar 📆
+# vue-calendarless 📆
 
-> Zero dependency Vue renderless calendar with scoped-slots API
+A Vue renderless calendar component.
+
+> This is a fork of the `vue-renderless-calendar` library, which is not maintained actively.
+> This library may be **subject of heavy changes at any time**, since it's not developped for public usage for the moment.
 
 ## Install
 
 ```bash
-npm i vue-renderless-calendar
-yarn add vue-renderless-calendar
+npm i vue-calendarless
+yarn add vue-calendarless
 ```
 
-## RenderlessCalendar
+## Component usage
 
 > Main wrapper component which contains state of the calendar and other helpful data
 
@@ -100,3 +103,31 @@ yarn add vue-renderless-calendar
 | isWeekend         | Boolean |             |
 | isToday           | Boolean |             |
 | isOtherMonthDay   | Boolean | This field can be used to find out that this is the date from previous or next month |
+
+## Contributing
+
+How to debug in local
+
+### Runs the local examples
+
+This opens a simple Vue application with calendar examples.
+
+```
+yarn dev:example
+```
+
+### In another project
+
+If you use the library in another project, you can link it to your local clone and debug the calendar sources from this project directly.
+
+```
+yarn link
+yarn watch # Updates the /dist folder at every change
+```
+
+```
+# Use the local version of the library in the node_modules
+yarn link vue-calendarless
+```
+
+You can now open the source files in the browser debugger.
