@@ -5,6 +5,7 @@
       datesByMonths,
       dateListeners,
       dateAttrs,
+      weekDayNames,
       prevMonth,
       nextMonth
     }"
@@ -19,14 +20,17 @@
     <div class="root">
       <div class="head">
         <button @click="prevMonth">-</button>
+        <span>{{ (datesByMonths[0].monthIndex + 1).toString().padStart(2, '0') }} {{ datesByMonths[0].year }}</span>
         <button @click="nextMonth">+</button>
+      </div>
+      <div class="weekdays">
+        <span v-for="weekday of weekDayNames" :key="weekday.short">{{ weekday.short }}</span>
       </div>
       <div
         v-for="month in datesByMonths"
-        :key="`${month.monthIndex}-${month.year}`"
+        :key="`${month.monthIndex + 1}-${month.year}`"
         class="calendar"
       >
-        {{ month.monthIndex }} {{ month.year }}
         <div class="calendar__body">
           <CalendarCellBis
             v-for="date in month.dates"
@@ -83,13 +87,19 @@
   
   .root {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     background: #fff;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
   }
-  
+
+  .weekdays > * {
+    width: 40px;
+    display: inline-block;
+  }
+
   .calendar {
     width: calc(#{$cell-width} * 7);
     padding: 8px;

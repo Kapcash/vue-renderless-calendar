@@ -24,6 +24,10 @@ export default class CalendarDate {
     return isWeekend(this._date);
   }
 
+  get realMonth() {
+    return this.month + 1;
+  }
+
   isWithin(dates) {
     return dates.some(date => date.getTime() === this._date.getTime());
   }
